@@ -3,7 +3,7 @@ Presenting, the world-famous Tic Tac Toe!<br>
 An addictive game for all age groups.<br>
 This is a complete end-to-end game.
 
-##How to Run:
+## How to Run:
 1. Windows:
 ```
 python tictactoe.py
