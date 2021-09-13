@@ -14,6 +14,7 @@ Functions:
                           using 'O's or 'X's has won the game
 5. draw_move(board):    The function draws the computer's move and updates the board
 """
+import time
 from random import randrange
 
 
@@ -51,7 +52,7 @@ def enter_move(board):
             # Validation fails if the user's input is beyond the limits
             return "Failed"
     except ValueError:
-        # Validation check for non-integers
+        # Validation check for non-integers and None value
         print("Enter a valid numeric input!!")
 
 
@@ -105,18 +106,30 @@ def draw_move(board):
                         continue
 
 
-# Function calls made from here..
+# Print statements to display to the end-user, start here..
 print("\n"+"******" * 10, "TICTACTOE", "******" * 10)
 print("Author: Romit Thete"
-      "\nLast Revised date: 04-Sep-2021")
+      "\nLast Revised date: 13-Sep-2021")
 print("******" * 22)
 print("Description:"
       "\nThis is an interactive game where you play as 'O' and the computer plays as 'X'."
       "\nThe computer gets the first chance and always claims it's place in the center."
       "\nEnter the number where you need to put a 'O'.")
 print("******" * 22)
-print("The Game starts now:")
 
+# Getting the username
+username = input("Enter your name: ")
+
+# Condition to avoid user from entering a blank username.
+while username == '':
+    print("Please enter a name to begin!")
+    username = input("Enter your name: ")
+
+print("\nWelcome {}!".format(username.split()[0].capitalize()))
+time.sleep(1)
+print("\nLet's begin the game!!")
+
+# Game code starts here..
 comp = "X"
 user = "O"
 first_move = True
@@ -135,18 +148,24 @@ while make_list_of_free_fields(my_board):
     x = enter_move(my_board)
     if x is not None and x != "Failed" and x != "Already occupied":
         if victory_for(my_board, 'O') == 'O':
-            print('\n\nYou Won!!\n\n')
+            print('\n\n{} Wins!!\n\n'.format(username.split()[0].capitalize()))
             break
         draw_move(my_board)
         if victory_for(my_board, 'X') == 'X':
-            print('\n\nComputer Won!!\n\n')
+            print('\n\nComputer Wins!!\n\n')
             break
         display_board(my_board)
         if not make_list_of_free_fields(my_board):
             print("\n\nIt's a tie!\n\n")
     else:
         # The below is done because None is printed if x is None
-        if x is not None:
-            print(x)
+        if x == "Failed":
+            print("Please enter a valid non-utilized number between 1-9")
+        elif x == "Already occupied":
+            print("The given position is already occupied by an 'X' or 'O'. Please enter another one.")
+
+
+time.sleep(1)
 print("Here's the final board:")
+time.sleep(1)
 display_board(my_board)
